@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include "RendererHelper.h"
 
 Game::Game(std::string_view title) :
 	gameTitle(title)
@@ -50,7 +51,6 @@ void Game::Loop() {
 }
 
 void Game::Shutdown() {
-	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
@@ -80,8 +80,22 @@ void Game::ProcessInput() {
 void Game::Draw() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_RenderDrawPoint(renderer, windowWidth / 2, windowHeight / 2);
+
+	float w = static_cast<float>(windowWidth);
+	float h = static_cast<float>(windowHeight);
+
+	RendererHelper::DrawPoint(renderer,
+							  { 100.f, 100.f },
+							  { 255, 0, 0, 255 });
+	RendererHelper::DrawLine(renderer,
+							 { 0.f, 0.f },
+							 { w, h },
+							 { 0, 255, 0, 255 });
+	RendererHelper::DrawRect(renderer,
+							 { w / 4.f, h / 4.f },
+							 { w * 3.f / 4.f, h * 3.f / 4.f },
+							 { 0, 0, 255, 255 });
+
 	SDL_RenderPresent(renderer);
 }
 
