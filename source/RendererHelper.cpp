@@ -1,6 +1,6 @@
 #include "RendererHelper.h"
 
-void RendererHelper::DrawPoint(SDL_Renderer* renderer, Point point, SDL_Color color) {
+void RendererHelper::DrawPoint(SDL_Renderer* renderer, Point point, Color color) {
 	SDL_Color oldColor;
 	SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -8,7 +8,7 @@ void RendererHelper::DrawPoint(SDL_Renderer* renderer, Point point, SDL_Color co
 	SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
 }
 
-void RendererHelper::DrawLine(SDL_Renderer* renderer, Point point1, Point point2, SDL_Color color) {
+void RendererHelper::DrawLine(SDL_Renderer* renderer, Point point1, Point point2, Color color) {
 	SDL_Color oldColor;
 	SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
@@ -16,7 +16,7 @@ void RendererHelper::DrawLine(SDL_Renderer* renderer, Point point1, Point point2
 	SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
 }
 
-void RendererHelper::DrawRect(SDL_Renderer* renderer, Point leftTop, Point rightBottom, SDL_Color color) {
+void RendererHelper::DrawRect(SDL_Renderer* renderer, Point leftTop, Point rightBottom, Color color) {
 	SDL_Color oldColor;
 	SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
 	SDL_FRect rect;
