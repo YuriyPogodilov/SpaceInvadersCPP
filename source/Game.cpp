@@ -100,5 +100,13 @@ void Game::Draw() {
 }
 
 void Game::Update() {
+	if (isFPSLocked) {
+		uint32_t time_to_wait = FRAME_TARGET_TIME - (SDL_GetTicks() - previousFrameTime);
+		if (time_to_wait > 0 && time_to_wait <= FRAME_TARGET_TIME) {
+			SDL_Delay(time_to_wait);
+		}
+	}
 
+	deltaTime = static_cast<float>(SDL_GetTicks() - previousFrameTime) / 1000.f;
+	previousFrameTime = SDL_GetTicks();
 }
