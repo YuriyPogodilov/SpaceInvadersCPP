@@ -1,3 +1,4 @@
+#include <vector>
 #include "RendererHelper.h"
 
 void RendererHelper::DrawPoint(SDL_Renderer* renderer, Point point, Color color) {
@@ -26,5 +27,40 @@ void RendererHelper::DrawRect(SDL_Renderer* renderer, Point leftTop, Point right
 	rect.h = rightBottom.y - leftTop.y;
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRectF(renderer, &rect);
+	SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
+}
+
+void RendererHelper::DrawCircle(SDL_Renderer *renderer, Point center, int radius, Color color) {
+	SDL_Color oldColor;
+	SDL_GetRenderDrawColor(renderer, &oldColor.r, &oldColor.g, &oldColor.b, &oldColor.a);
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+	auto drawCircle = [renderer](int xc, int yc, int x, int y) {
+		SDL_RenderDrawPoint(renderer, xc+x, yc+y);
+		SDL_RenderDrawPoint(renderer, xc-x, yc+y);
+		SDL_RenderDrawPoint(renderer, xc+x, yc-y);
+		SDL_RenderDrawPoint(renderer, xc-x, yc-y);
+		SDL_RenderDrawPoint(renderer, xc+y, yc+x);
+		SDL_RenderDrawPoint(renderer, xc-y, yc+x);
+		SDL_RenderDrawPoint(renderer, xc+y, yc-x);
+		SDL_RenderDrawPoint(renderer, xc-y, yc-x);
+	};
+
+	int x = 0, y = radius;
+	int d = 3 - 2 * radius;
+	drawCircle(center.x, center.y, x, y);
+	while (y >= x)
+	{
+		x++;
+		if (d > 0)
+		{
+			y--;
+			d = d + 4 * (x - y) + 10;
+		}
+		else
+			d = d + 4 * x + 6;
+		drawCircle(center.x, center.y, x, y);
+	}
+
 	SDL_SetRenderDrawColor(renderer, oldColor.r, oldColor.g, oldColor.b, oldColor.a);
 }

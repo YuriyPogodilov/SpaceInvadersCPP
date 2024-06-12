@@ -84,7 +84,7 @@ void Game::Draw() {
 	float w = static_cast<float>(windowWidth);
 	float h = static_cast<float>(windowHeight);
 
-	RendererHelper::DrawPoint(renderer,{ 100.f, 100.f }, Color(0xff0000ff));
+	RendererHelper::DrawPoint(renderer,{ w / 2.f, 200.f }, Color(0xff0000ff));
 	RendererHelper::DrawLine(renderer,
 							 { 0.f, 0.f },
 							 { w, h },
@@ -93,6 +93,8 @@ void Game::Draw() {
 							 { w / 4.f, h / 4.f },
 							 { w * 3.f / 4.f, h * 3.f / 4.f },
 							 Color(0x0000ffff));
+
+	RendererHelper::DrawCircle(renderer, { w / 2.f, 200.f }, 100.f, Color(0xffff00ff));
 
 	SDL_RenderPresent(renderer);
 }
