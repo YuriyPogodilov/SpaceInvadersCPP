@@ -1,6 +1,5 @@
 #include "Game.h"
-#include <iostream>
-#include "RendererHelper.h"
+#include "GameScene.h"
 
 Game::Game(std::string_view title) :
 	gameTitle(title)
@@ -40,6 +39,11 @@ bool Game::Init() {
 	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 
 	bIsRunning = true;
+
+	// Create game
+	scene = std::make_shared<GameScene>("mapScene");
+	scene->Init();
+	scene->PrintHierarchy();
 
 	return true;
 }
@@ -81,20 +85,7 @@ void Game::Draw() {
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
-	float w = static_cast<float>(windowWidth);
-	float h = static_cast<float>(windowHeight);
-
-	RendererHelper::DrawPoint(renderer,{ w / 2.f, 200.f }, Color(0xff0000ff));
-	RendererHelper::DrawLine(renderer,
-							 { 0.f, 0.f },
-							 { w, h },
-							 Color(0x00ff00ff));
-	RendererHelper::DrawRect(renderer,
-							 { w / 4.f, h / 4.f },
-							 { w * 3.f / 4.f, h * 3.f / 4.f },
-							 Color(0x0000ffff));
-
-	RendererHelper::DrawCircle(renderer, { w / 2.f, 200.f }, 100.f, Color(0xffff00ff));
+	scene->Draw(renderer);
 
 	SDL_RenderPresent(renderer);
 }
@@ -109,4 +100,10 @@ void Game::Update() {
 
 	deltaTime = static_cast<float>(SDL_GetTicks() - previousFrameTime) / 1000.f;
 	previousFrameTime = SDL_GetTicks();
+
+	scene->Update(deltaTime);
+}
+
+void Game::Stop() {
+	bIsRunning = false;
 }

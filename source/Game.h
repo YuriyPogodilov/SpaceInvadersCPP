@@ -2,6 +2,9 @@
 
 #include <SDL.h>
 #include <string>
+#include <memory>
+
+class GameScene;
 
 class Game {
 public:
@@ -10,6 +13,7 @@ public:
 
 	bool Init();
 	void Loop();
+	void Stop();
 	void Shutdown();
 
 	[[nodiscard]] bool isRunning() const;
@@ -34,4 +38,6 @@ private:
 
 	int windowWidth{1920};
 	int windowHeight{1080};
+
+	std::shared_ptr<GameScene> scene;
 };
