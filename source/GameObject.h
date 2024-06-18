@@ -4,6 +4,7 @@
 #include <string>
 #include <string_view>
 #include <memory>
+#include "Vector.h"
 
 class SDL_Renderer;
 
@@ -22,8 +23,22 @@ public:
 
 	void PrintHierarchy(int level = 0) const;
 
+	void SetPosition(Point newPosition);
+	Point GetPosition() const;
+
+protected:
+	void DrawOutline(SDL_Renderer* renderer);
+
 protected:
 	std::string name;
 	std::weak_ptr<GameObject> parent;
 	std::vector<std::shared_ptr<GameObject>> children;
+
+	Vector2 position {0.f, 0.f};
+	Vector2 size {0.f, 0.f};
+
+	Vector2 pivot { 0.5f, 0.5f };
+	Vector2 anchor { 0.5f, 0.5f };
+
+	bool bShowOutline { false };
 };
