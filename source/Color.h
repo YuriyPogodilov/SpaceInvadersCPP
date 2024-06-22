@@ -13,9 +13,9 @@ public:
 	explicit Color(uint32_t hexColor);
 
 
-	static const Color White;
-	static const Color Black;
-	static const Color Red;
-	static const Color Green;
-	static const Color Blue;
+	static const Color WHITE;
+	static const Color BLACK;
+	static const Color RED;
+	static const Color GREEN;
+	static const Color BLUE;
 };
