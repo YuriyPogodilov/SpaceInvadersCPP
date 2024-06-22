@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "GameScene.h"
+#include "InputHandlerSystem.h"
 
 Game::Game(std::string_view title) :
 	gameTitle(title)
@@ -40,6 +41,8 @@ bool Game::Init() {
 
 	bIsRunning = true;
 
+	InputHandlerSystem::GetInstance();
+
 	// Create game
 	scene = std::make_shared<GameScene>("mapScene");
 	scene->Init();
@@ -55,6 +58,8 @@ void Game::Loop() {
 }
 
 void Game::Shutdown() {
+	InputHandlerSystem::Shutdown();
+
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 }
@@ -68,14 +73,14 @@ void Game::ProcessInput() {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 			case SDL_QUIT:
-				bIsRunning = false;
+				Stop();
 				break;
-			case SDL_KEYDOWN: {
-				switch (event.key.keysym.sym) {
-					case SDLK_ESCAPE:
-						bIsRunning = false;
-						break;
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_ESCAPE) {
+					Stop();
 				}
+			case SDL_KEYUP: {
+				InputHandlerSystem::GetInstance().ProcessInput(event.type, event.key.keysym.sym);
 			}
 		}
 	}

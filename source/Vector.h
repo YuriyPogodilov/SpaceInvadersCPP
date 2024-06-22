@@ -9,6 +9,13 @@ public:
 	float y;
 
 public:
+	static const Vector2 ZERO;
+	static const Vector2 UP;
+	static const Vector2 DOWN;
+	static const Vector2 LEFT;
+	static const Vector2 RIGHT;
+
+public:
 	inline Vector2(): x(0.f), y(0.f) {}
 	inline Vector2(float x, float y): x(x), y(y) {}
 
